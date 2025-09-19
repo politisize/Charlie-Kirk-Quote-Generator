@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlie Kirk Quote Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a202c"/>
+    <link rel="apple-touch-icon" href="images/icon-192x192.png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .quote-card {
+            background: linear-gradient(145deg, #2d3748, #1a202c);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 40px rgba(255,255,255,0.05) inset;
+        }
+        .btn-primary {
+            background-color: #e53e3e;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-primary:hover {
+            background-color: #c53030;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: #4a5568;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #2d3748;
+            transform: translateY(-2px);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e53e3e;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-red-500">Charlie Kirk</h1>
+            <p class="text-lg text-gray-400">Quote Generator</p>
+        </header>
+
+        <main id="app" class="w-full">
+            <div class="quote-card rounded-xl p-6 md:p-8 mb-6 min-h-[250px] flex flex-col justify-center">
+                <p id="quote-text" class="text-xl md:text-2xl italic text-gray-200">"Click the button to generate a quote."</p>
+                <p id="quote-source" class="text-sm text-gray-500 mt-4"></p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="generate-quote-btn" class="btn-primary text-white font-bold py-3 px-6 rounded-lg shadow-lg w-full sm:w-auto">
+                    Generate Quote
+                </button>
+                <button id="explain-quote-btn" class="btn-secondary text-white font-bold py-3 px-6 rounded-lg shadow-lg w-full sm:w-auto hidden">
+                    Explain this Quote
+                </button>
+            </div>
+            
+            <div id="explanation-box" class="mt-6 p-6 bg-gray-800 rounded-lg border border-gray-700 hidden">
+                 <div id="loader" class="loader mx-auto hidden"></div>
+                <p id="explanation-text" class="text-gray-300"></p>
+            </div>
+        </main>
+    </div>
+
+    <footer class="w-full max-w-4xl mx-auto text-center mt-12">
+        <h3 class="text-2xl font-bold text-gray-300 mb-6">Recommended Reading</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            <!-- Book 1 -->
+            <a href="https://www.amazon.com/Stop-Name-God-Honoring-Transform/dp/B0FPPV48PB?_encoding=UTF8&pd_rd_w=UsvgC&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=jaAlB&pd_rd_r=aa2add61-1c38-49d0-9af4-d34bae9e36ca&linkCode=ll1&tag=politisize-20&linkId=ddea98dcfbb93c580b6efc35db2bfae7&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                <img src="https://m.media-amazon.com/images/I/71R2Xg71XcL._SL1500_.jpg" alt="Stop in the Name of God" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+             <!-- Book 2 -->
+            <a href="https://www.amazon.com/College-Scam-Universities-Bankrupting-Brainwashing/dp/1735503738?_encoding=UTF8&pd_rd_w=UsvgC&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=jaAlB&pd_rd_r=aa2add61-1c38-49d0-9af4-d34bae9e36ca&linkCode=ll1&tag=politisize-20&linkId=5d8635bd2185e5529f5b967c2ff3f7d7&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                <img src="https://m.media-amazon.com/images/I/71A644TjEFL._SL1500_.jpg" alt="The College Scam" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+            <!-- Book 3 -->
+            <a href="https://www.amazon.com/MAGA-Doctrine-Only-Ideas-Future/dp/0063512866?_encoding=UTF8&pd_rd_w=Rsnyh&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=Wlj0y&pd_rd_r=1429f1c0-8c9a-4bbc-ba06-fb421b477377&linkCode=ll1&tag=politisize-20&linkId=24d00b46bf1b7c94a66df47e0938102d&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                <img src="https://m.media-amazon.com/images/I/611bX1zGg3L._SL1500_.jpg" alt="The MAGA Doctrine" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+            <!-- Book 4 -->
+            <a href="https://www.amazon.com/Right-Wing-Revolution-Beat-Woke/dp/1735503797?_encoding=UTF8&pd_rd_w=SDfis&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=r1iJT&pd_rd_r=de22ff78-c3d3-4777-9c7b-5058449af977&linkCode=ll1&tag=politisize-20&linkId=166b5e71f28ca6e9d2532724bc68139f&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                <img src="https://m.media-amazon.com/images/I/71D0L2z1n6L._SL1500_.jpg" alt="Right-Wing Revolution" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+            <!-- Book 5 -->
+            <a href="https://www.amazon.com/Time-Turning-Point-Government-Generations/dp/1637583419?_encoding=UTF8&pd_rd_w=QTPji&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=n1ezE&pd_rd_r=3f60234c-2646-4c5f-9ebf-afdd16f18eb4&linkCode=ll1&tag=politisize-20&linkId=94815f4195e9cfd48d92b8e8e0617aa8&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                <img src="https://m.media-amazon.com/images/I/71u9z2-bs4L._SL1500_.jpg" alt="Time for a Turning Point" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+             <!-- Book 6 -->
+            <a href="https://www.amazon.com/Campus-Battle-Plan-Winning-Students-ebook/dp/B01M03PV0C?_encoding=UTF8&pd_rd_w=SDfis&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=r1iJT&pd_rd_r=de22ff78-c3d3-4777-9c7b-5058449af977&linkCode=ll1&tag=politisize-20&linkId=e9a184e1837482813589c3722e03079f&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+                 <img src="https://m.media-amazon.com/images/I/81I-u36-zFL._SL1500_.jpg" alt="Campus Battle Plan" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const quotes = [
+            { quote: "The American Dream is alive and well, but you have to be willing to work for it. It's not a handout; it's a hand up.", source: "Speech at Young America's Foundation, 2021", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+            { quote: "Capitalism is the greatest engine of prosperity the world has ever known. It has lifted more people out of poverty than any other system in history.", source: "Turning Point USA Student Action Summit, 2022", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+            { quote: "Our rights do not come from government. They come from God. The Constitution is not a grant of rights; it is a recognition of rights that already exist.", source: "CPAC, 2023", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+            { quote: "The culture war is not a distraction. It is the main event. What we believe about family, faith, and freedom will determine the future of this nation.", source: "AmericaFest, 2022", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+            { quote: "Freedom of speech is not just the right to say what is popular. It is the right to say what is unpopular, to challenge the status quo, and to speak truth to power.", source: "Campus Tour at University of Florida, 2023", url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+        ];
+
+        let currentQuote = null;
+
+        const quoteTextElem = document.getElementById('quote-text');
+        const quoteSourceElem = document.getElementById('quote-source');
+        const generateQuoteBtn = document.getElementById('generate-quote-btn');
+        const explainQuoteBtn = document.getElementById('explain-quote-btn');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationTextElem = document.getElementById('explanation-text');
+        const loader = document.getElementById('loader');
+
+        generateQuoteBtn.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            currentQuote = quotes[randomIndex];
+            
+            quoteTextElem.textContent = `"${currentQuote.quote}"`;
+            
+            // Create a clickable link for the source
+            const sourceLink = document.createElement('a');
+            sourceLink.href = currentQuote.url;
+            sourceLink.textContent = currentQuote.source;
+            sourceLink.target = "_blank";
+            sourceLink.rel = "noopener noreferrer";
+            sourceLink.className = "text-red-400 hover:underline";
+            
+            quoteSourceElem.innerHTML = ''; // Clear previous source
+            quoteSourceElem.appendChild(document.createTextNode('Source: '));
+            quoteSourceElem.appendChild(sourceLink);
+
+            explainQuoteBtn.classList.remove('hidden');
+            explanationBox.classList.add('hidden');
+            explanationTextElem.textContent = '';
+        });
+
+        explainQuoteBtn.addEventListener('click', async () => {
+            if (!currentQuote) return;
+
+            explanationBox.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            explanationTextElem.textContent = '';
+            
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            // Note the updated prompt for simpler language
+            const userQuery = `Explain the following quote by Charlie Kirk in simple terms that a 14-year-old can easily understand. Focus on the core message and why it's important to his conservative viewpoint. Do not use complex political jargon. Quote: "${currentQuote.quote}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+            };
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                
+                loader.classList.add('hidden');
+                
+                if (result.candidates && result.candidates[0].content.parts[0].text) {
+                    explanationTextElem.textContent = result.candidates[0].content.parts[0].text;
+                } else {
+                    explanationTextElem.textContent = "Sorry, I couldn't get an explanation for that quote. Please try again.";
+                }
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                loader.classList.add('hidden');
+                explanationTextElem.textContent = "There was an error connecting to the AI. Please check your connection and try again.";
+            }
+        });
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+
+</body>
+</html>
