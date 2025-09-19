@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mythos Engine v18 - Roster Manager</title>
+    <link rel="stylesheet" href="style.css"></head><body>
+
+    <div class="container">
+        <h1>Mythos Engine v18</h1>
+        <p>Forge your legend from an ever-expanding universe, now with your own custom roster.</p>
+        <button id="manageRosterBtn" class="action-btn">Manage Roster</button>
+
+        <div class="dropdown-grid">
+            <div class="dropdown-group">
+                <label for="protagonist">Protagonist <span class="reroll-btn" id="rerollProtagonist">🎲</span></label>
+                <select id="protagonist"></select>
+            </div>
+            <div class="dropdown-group">
+                <label for="antagonist">Antagonist <span class="reroll-btn" id="rerollAntagonist">🎲</span></label>
+                <select id="antagonist"></select>
+            </div>
+            <div class="dropdown-group">
+                <label for="setting">Setting <span class="reroll-btn" id="rerollSetting">🎲</span></label>
+                <select id="setting"></select>
+            </div>
+             <div class="dropdown-group">
+                <label for="motive">Motive <span class="reroll-btn" id="rerollMotive">🎲</span></label>
+                <select id="motive"></select>
+            </div>
+             <div class="dropdown-group">
+                <label for="twist">The Twist <span class="reroll-btn" id="rerollTwist">🎲</span></label>
+                <select id="twist"></select>
+            </div>
+        </div>
+        
+        <h2>Real-World Titans (Optional)</h2>
+        <div class="dropdown-grid">
+            <div class="dropdown-group">
+                <label for="ceo">CEO / Billionaire</label>
+                <select id="ceo"></select>
+            </div>
+            <div class="dropdown-group">
+                <label for="leader">World Leader</label>
+                <select id="leader"></select>
+            </div>
+        </div>
+
+        <button id="generateBtn">Forge Legend</button>
+        <div id="generation-controls" class="module">
+            <button id="saveBtn" class="action-btn">Save to Hall of Legends</button>
+            <button id="exportBtn" class="action-btn">Export All Content</button>
+        </div>
+
+        <div class="output">
+            <p id="result">Your generated legend will appear here...</p>
+        </div>
+        
+        <div id="generated-content">
+            <div class="module" id="promptArchitect">
+                <h2>AI Art Prompt Architect</h2>
+                <div class="dropdown-grid">
+                    <div class="dropdown-group">
+                        <label for="artStyle">Art Style</label>
+                        <select id="artStyle"></select>
+                    </div>
+                    <div class="dropdown-group">
+                        <label for="mood">Mood</label>
+                        <select id="mood"></select>
+                    </div>
+                </div>
+                <textarea id="promptOutput" readonly></textarea>
+                <button id="copyPromptBtn" class="action-btn">Copy Prompt</button>
+            </div>
+            
+            <div class="module" id="storyWeaver">
+                <h2>Story Weaver (Script Outline)</h2>
+                <div id="story-template-display"></div>
+                <div class="story-act">
+                    <h3>ACT I: The Inciting Incident</h3>
+                    <textarea id="act1"></textarea>
+                </div>
+                <div class="story-act">
+                    <h3>ACT II: The Escalation</h3>
+                    <textarea id="act2"></textarea>
+                </div>
+                <div class="story-act">
+                    <h3>ACT III: The Resolution</h3>
+                    <textarea id="act3"></textarea>
+                </div>
+                <button id="elaborateBtn" class="action-btn">Elaborate with AI</button>
+            </div>
+
+            <div class="module" id="thumbnailGenerator">
+                <h2>Thumbnail Idea Generator</h2>
+                <div id="thumbnailIdeasContainer"></div>
+            </div>
+
+            <div class="module" id="pollGenerator">
+                <h2>Community Poll Generator</h2>
+                <div id="pollQuestionContainer"></div>
+            </div>
+            
+            <div class="module" id="socialAmplifier">
+                <h2>Social Media Amplifier</h2>
+                <h3>Suggested YouTube Titles</h3>
+                <textarea id="titleList"></textarea>
+                <h3>YouTube Description</h3>
+                <textarea id="youtubeDesc"></textarea>
+                <h3>Hashtags</h3>
+                <textarea id="hashtags"></textarea>
+                <button id="copySocialsBtn" class="action-btn">Copy All Social Text</button>
+            </div>
+        </div>
+        <div class="hall-of-legends">
+            <h2>The Hall of Legends</h2>
+            <div id="savedLegendsContainer">
+                <p>Your saved legends will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="roster-manager-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Roster Manager</h2>
+            <div class="roster-forms">
+                <form id="add-character-form">
+                    <h3>Add New Character</h3>
+                    <input type="text" id="char-name" placeholder="Character Name (e.g., Kratos)" required>
+                    <input type="text" id="char-source" placeholder="Source (e.g., God of War)" required>
+                    <select id="char-type">
+                        <option value="protagonist">Protagonist</option>
+                        <option value="antagonist">Antagonist</option>
+                    </select>
+                    <input type="text" id="char-tags" placeholder="Synergy Tags (comma-separated)" required>
+                    <button type="submit">Add Character</button>
+                </form>
+                <form id="add-item-form">
+                    <h3>Add Other Item</h3>
+                    <input type="text" id="item-text" placeholder="Item Text" required>
+                    <select id="item-type">
+                        <option value="settings">Setting</option>
+                        <option value="motives">Motive</option>
+                        <option value="twists">Twist</option>
+                    </select>
+                    <button type="submit">Add Item</button>
+                </form>
+            </div>
+            <div class="roster-lists">
+                <h3>Your Custom Entries</h3>
+                <div id="custom-roster-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script></body></html>
