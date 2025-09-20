@@ -1,15 +1,16 @@
-const CACHE_NAME = 'kirk-quotes-cache-v1';
+const CACHE_NAME = 'kirk-quotes-cache-v2'; // Updated version
 const urlsToCache = [
   '/',
   '/index.html',
+  '/manifest.json',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
-  'https://m.media-amazon.com/images/I/71R2Xg71XcL._SL1500_.jpg',
-  'https://m.media-amazon.com/images/I/71A644TjEFL._SL1500_.jpg',
-  'https://m.media-amazon.com/images/I/611bX1zGg3L._SL1500_.jpg',
-  'https://m.media-amazon.com/images/I/71D0L2z1n6L._SL1500_.jpg',
-  'https://m.media-amazon.com/images/I/71u9z2-bs4L._SL1500_.jpg',
-  'https://m.media-amazon.com/images/I/81I-u36-zFL._SL1500_.jpg'
+  '/images/stop-in-the-name-of-god.jpg',
+  '/images/the-college-scam.jpg',
+  '/images/the-maga-doctrine.jpg',
+  '/images/right-wing-revolution.jpg',
+  '/images/time-for-a-turning-point.jpg',
+  '/images/campus-battlefield.jpg'
 ];
 
 self.addEventListener('install', event => {
@@ -44,6 +45,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            // Delete old caches
             return caches.delete(cacheName);
           }
         })
