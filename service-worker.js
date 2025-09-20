@@ -1,20 +1,20 @@
-const CACHE_NAME = 'kirk-quotes-cache-v6'; // Updated version for the rename
+const CACHE_NAME = 'charlie-kirk-quote-library-v1.0.9';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  'https://cdn.tailwindcss.com',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
-  '/images/stop-in-the-name-of-god.jpg',
-  '/images/the-college-scam.jpg',
-  '/images/the-maga-doctrine.jpg',
-  '/images/right-wing-revolution.jpg',
-  '/images/time-for-a-turning-point.jpg',
-  '/images/campus-battlefield.jpg'
+    '/The-Charlie-Kirk-Quote-Library/',
+    '/The-Charlie-Kirk-Quote-Library/index.html',
+    '/The-Charlie-Kirk-Quote-Library/quotes.json',
+    '/The-Charlie-Kirk-Quote-Library/manifest.json',
+    '/The-Charlie-Kirk-Quote-Library/images/stop-in-the-name-of-god.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/the-college-scam.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/the-maga-doctrine.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/right-wing-revolution.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/time-for-a-turning-point.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/campus-battlefield.jpg',
+    '/The-Charlie-Kirk-Quote-Library/images/icon-192x192.png',
+    '/The-Charlie-Kirk-Quote-Library/images/icon-512x512.png'
 ];
 
 self.addEventListener('install', event => {
-  // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -28,7 +28,6 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - return response
         if (response) {
           return response;
         }
@@ -45,7 +44,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // Delete old caches
             return caches.delete(cacheName);
           }
         })
