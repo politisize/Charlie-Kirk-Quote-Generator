@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kirk-quotes-cache-v5'; // Updated version to force refresh
+const CACHE_NAME = 'kirk-quotes-cache-v6'; // Updated version for the rename
 const urlsToCache = [
   '/',
   '/index.html',
