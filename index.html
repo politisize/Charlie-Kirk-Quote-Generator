@@ -62,7 +62,7 @@
         <main id="app" class="w-full">
             <div class="quote-card rounded-xl p-6 md:p-8 mb-6 min-h-[250px] flex flex-col justify-center">
                 <p id="quote-text" class="text-xl md:text-2xl italic text-gray-200">"Click the button to generate a quote."</p>
-                <p id="quote-source" class="text-sm text-gray-500 mt-4"></p>
+                <div id="quote-source-wrapper" class="text-sm text-gray-500 mt-4"></div>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -85,7 +85,7 @@
         <h3 class="text-2xl font-bold text-gray-300 mb-6">Recommended Reading</h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             <!-- Book 1 -->
-            <a href="https://www.amazon.com/Stop-Name-God-Honoring-Transform/dp/B0FPPV48PB?_encoding=UTF8&pd_rd_w=UsvgC&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=jaAlB&pd_rd_r=aa2add61-1c38-49d0-9af4-d34bae9e36ca&linkCode=ll1&tag=politisize-20&linkId=ddea98dcfbb93c580b6efc35db2bfae7&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
+            <a href="https://www.amazon.com/Stop-Name-God-Honoring-Transform/dp/B0FPPV48PB?_encoding=UTF8&pd_rd_w=UsvgC&content-id=amzn1.sym.972d6c57-0594-496b-b448-b6992d610f1c&pf_rd_p=972d6c57-0594-49b-b448-b6992d610f1c&pf_rd_r=138-6309882-1869832&pd_rd_wg=jaAlB&pd_rd_r=aa2add61-1c38-49d0-9af4-d34bae9e36ca&linkCode=ll1&tag=politisize-20&linkId=ddea98dcfbb93c580b6efc35db2bfae7&language=en_US&ref_=as_li_ss_tl" target="_blank" class="group">
                 <img src="images/stop-in-the-name-of-god.jpg" alt="Stop in the Name of God" class="rounded-md shadow-lg group-hover:opacity-80 transition-opacity">
             </a>
              <!-- Book 2 -->
@@ -126,29 +126,25 @@
         let currentQuote = null;
 
         const quoteTextElem = document.getElementById('quote-text');
-        const quoteSourceElem = document.getElementById('quote-source');
+        const quoteSourceWrapper = document.getElementById('quote-source-wrapper');
         const generateQuoteBtn = document.getElementById('generate-quote-btn');
         const explainQuoteBtn = document.getElementById('explain-quote-btn');
         const explanationBox = document.getElementById('explanation-box');
         const explanationTextElem = document.getElementById('explanation-text');
         const loader = document.getElementById('loader');
-
+        
         generateQuoteBtn.addEventListener('click', () => {
             const randomIndex = Math.floor(Math.random() * quotes.length);
             currentQuote = quotes[randomIndex];
             
             quoteTextElem.textContent = `"${currentQuote.quote}"`;
             
-            const sourceLink = document.createElement('a');
-            sourceLink.href = currentQuote.url;
-            sourceLink.textContent = currentQuote.source;
-            sourceLink.target = "_blank";
-            sourceLink.rel = "noopener noreferrer";
-            sourceLink.className = "text-red-400 hover:underline";
+            quoteSourceWrapper.innerHTML = ''; // Clear previous content
+
+            const sourceText = document.createElement('span');
+            sourceText.textContent = `Source: ${currentQuote.source}`;
             
-            quoteSourceElem.innerHTML = ''; 
-            quoteSourceElem.appendChild(document.createTextNode('Source: '));
-            quoteSourceElem.appendChild(sourceLink);
+            quoteSourceWrapper.appendChild(sourceText);
 
             explainQuoteBtn.classList.remove('hidden');
             explanationBox.classList.add('hidden');
