@@ -166,7 +166,7 @@
             explanationTextElem.textContent = '';
             
             const apiKey = ""; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=" + apiKey;
             
             const userQuery = `Explain the following quote by Charlie Kirk in simple terms that a 14-year-old can easily understand. Focus on the core message and why it's important to his conservative viewpoint. Do not use complex political jargon. Quote: "${currentQuote.quote}"`;
 
@@ -184,10 +184,20 @@
                 
                 loader.classList.add('hidden');
                 
-                if (result.candidates && result.candidates[0].content.parts[0].text) {
-                    explanationTextElem.textContent = result.candidates[0].content.parts[0].text;
+                console.log('Gemini API Response:', JSON.stringify(result, null, 2));
+
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    explanationTextElem.textContent = candidate.content.parts[0].text;
                 } else {
-                    explanationTextElem.textContent = "Sorry, I couldn't get an explanation for that quote. Please try again.";
+                    let errorMessage = "Sorry, I couldn't get an explanation for that quote. Please try again.";
+                    if (result.error) {
+                        errorMessage = `API Error: ${result.error.message}`;
+                    } else if (candidate?.finishReason && candidate.finishReason !== 'STOP') {
+                        errorMessage = `Could not generate explanation. Reason: ${candidate.finishReason}. This might be due to content safety filters.`;
+                    }
+                    explanationTextElem.textContent = errorMessage;
                 }
 
             } catch (error) {
